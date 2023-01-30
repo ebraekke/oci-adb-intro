@@ -1,5 +1,7 @@
 # ebraekke/oci-adb-intro
 
+https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/AutonomousDatabase/
+
 # Intro 
 
 This is the first version of a terraform recipe that creates an MongoDB compatible Autonomous inside a 
