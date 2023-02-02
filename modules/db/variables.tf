@@ -4,4 +4,4 @@ variable "avadom_name"          {}
 variable "compartment_ocid"     {}
 variable "subnet_ocid"          {}
 variable "db_cores"             {}
-variable "db_gb_storage"        {}
+variable "db_tb_storage"        {}

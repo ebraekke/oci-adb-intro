@@ -17,20 +17,9 @@ variable "db_cores" {
     default = "1"
 }
 
-
-variable "db_gb_storage" {
-    description = "Number GB storage for ADB"
+variable "db_tb_storage" {
+    description = "Number TB storage for ADB"
     default = "1"
-}
-
-variable "autoscale_cpu" {
-    description = "Autoscale CPUs?"
-    default = true
-}
-
-variable "autoscale_storage" {
-    description = "Autoscale storage?"
-    default = true
 }
 
 ###########################################################################

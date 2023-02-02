@@ -1,3 +1,22 @@
+# Daily notes 
+
+```
+Error: 409-IncorrectState, You are attempting to use a feature that's not currently enabled for this tenancy.
+│ Suggestion: The resource is in a conflicted state. Please retry again or contact support for help with service: Database Autonomous
+│ Documentation: https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/database_autonomous_database
+│ API Reference: https://docs.oracle.com/iaas/api/#/en/database/20160918/AutonomousDatabase/CreateAutonomousDatabase
+│ Request Target: POST https://database.eu-frankfurt-1.oraclecloud.com/20160918/autonomousDatabases
+│ Provider version: 4.105.0, released on 2023-01-25.
+│ Service: Database Autonomous
+│ Operation Name: CreateAutonomousDatabase
+│ OPC request ID: 1b816d739f958de3af126909790dfd7d/B66C877C32961AC6839B29BB66D96138/E92D21221A7DBC43C5A3EFF4BB7A9E91
+│
+│
+│   with module.db.oci_database_autonomous_database.mongo_db,
+│   on modules\db\main.tf line 6, in resource "oci_database_autonomous_database" "mongo_db":
+│    6: resource "oci_database_autonomous_database" "mongo_db" {
+```
+
 # ebraekke/oci-adb-intro
 
 https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/AutonomousDatabase/

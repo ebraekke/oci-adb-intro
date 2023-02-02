@@ -8,7 +8,7 @@ module "db" {
     compartment_ocid    = var.compartment_ocid
     subnet_ocid         = var.subnet_ocid
     db_cores            = var.db_cores
-    db_gb_storage       = var.db_gb_storage
+    db_tb_storage       = var.db_tb_storage
 }
 
 /*

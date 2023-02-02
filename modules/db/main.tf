@@ -1,31 +1,28 @@
+/*
 
-/* 
-TODO: chaneg to ADB
+https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/CreateAutonomousDatabaseDetails
 
-resource "oci_mysql_mysql_db_system" "innodb_cluster" {
-    # Required
-    admin_password      = base64decode(var.db_password_base64) 
-    admin_username      = "admin"
-    availability_domain = var.avadom_name
-    compartment_id      = var.compartment_ocid
-
-    shape_name          = var.shape_name
-    subnet_id           = var.subnet_ocid
-
-    backup_policy {
-        is_enabled        = true
-        retention_in_days = 10
-        window_start_time = "00:00:00.00Z"   # midnight UTC
-    }
-
-    data_storage_size_in_gb = 100
-    description             = "Test InnoDB HA system"
-    display_name            = "InnoDB HA"
-    hostname_label          = "innodbha"
-    is_highly_available     = true
-
-    maintenance {
-        window_start_time   = "sun 21:00:00.00Z"
-    }
-}
 */
+resource "oci_database_autonomous_database" "mongo_db" {
+
+    ## name and placement
+    compartment_id                      = var.compartment_ocid
+    db_name                             = "mymongoadb"
+    display_name                        = "mymongoaadb"
+
+    ## security 
+    subnet_id                           = var.subnet_ocid
+    admin_password                      = base64decode(var.db_password_base64)
+    is_mtls_connection_required         = false
+
+    ## specs
+    cpu_core_count                      = var.db_cores
+    data_storage_size_in_tbs            = var.db_tb_storage
+    is_auto_scaling_enabled             = true
+    is_auto_scaling_for_storage_enabled = true
+    license_model                       = "LICENSE_INCLUDED"
+    # db_version                          = "19c"
+    db_workload                         = "AJD"
+    # max_cpu_core_count                  = (var.db_cores * 3)
+    private_endpoint_label              = "mymongoadb"
+}
