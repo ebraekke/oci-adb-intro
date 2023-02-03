@@ -3,8 +3,12 @@
 For readability
 */
 locals {
-  /*
-  mysql_hostname  = data.oci_mysql_mysql_db_system.mysql_db_system.endpoints[0]["hostname"]
-  mysql_port      = data.oci_mysql_mysql_db_system.mysql_db_system.endpoints[0]["port"]
-  */
+  adb_ip = data.oci_database_autonomous_database.my_adb.private_endpoint
+  adb_name = data.oci_database_autonomous_database.my_adb.private_endpoint
+
+  ## get full service name in easy fmt
+  full_adb_service_name = data.oci_database_autonomous_database.my_adb.connection_strings[0]["low"] 
+
+  ## extract the "real service name"
+  adb_service_name = local.full_adb_service_name
 }

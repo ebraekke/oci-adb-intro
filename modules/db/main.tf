@@ -3,12 +3,12 @@
 https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/CreateAutonomousDatabaseDetails
 
 */
-resource "oci_database_autonomous_database" "mongo_db" {
+resource "oci_database_autonomous_database" "my_adb" {
 
     ## name and placement
     compartment_id                      = var.compartment_ocid
-    db_name                             = "mymongoadb"
-    display_name                        = "mymongoaadb"
+    db_name                             = "myadb"
+    display_name                        = "myadb"
 
     ## security 
     subnet_id                           = var.subnet_ocid
@@ -22,7 +22,7 @@ resource "oci_database_autonomous_database" "mongo_db" {
     is_auto_scaling_for_storage_enabled = true
     license_model                       = "LICENSE_INCLUDED"
     # db_version                          = "19c"
-    db_workload                         = "AJD"
+    db_workload                         = "OLTP"
     # max_cpu_core_count                  = (var.db_cores * 3)
-    private_endpoint_label              = "mymongoadb"
+    private_endpoint_label              = "myadb"
 }
