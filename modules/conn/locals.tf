@@ -10,5 +10,6 @@ locals {
   full_adb_service_name = data.oci_database_autonomous_database.my_adb.connection_strings[0]["low"] 
 
   ## extract the "real service name"
-  adb_service_name = local.full_adb_service_name
+  ## Assumes maz length of less than (1000*10) - 1
+  adb_service_name = substr(regex("\\/.*$",  local.full_adb_service_name), 1, 1000*10)
 }
