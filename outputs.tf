@@ -12,15 +12,6 @@ output "vcn_name" {
 }
 */
 
-output "adb_db_ocid" {
-  value = module.db.adb_db_ocid
-}
-
-output "adb_service_name" {
-  value = module.conn.adb_service_name
-} 
-
 output "conn_ocid" {
   value = module.conn.conn_ocid
 }
-
