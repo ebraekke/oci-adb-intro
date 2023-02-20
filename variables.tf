@@ -12,6 +12,10 @@ variable "priv_endpoint_ocid" {
     description = "ocid of private endpoint in \"subnet_ocid\" to be used by new connection" 
 }
 
+variable "compartment_ocid"     {
+    description = "ocid of compartment"
+}
+
 variable "db_cores" {
     description = "Number of Cores for ADB"
     default = "1"
@@ -23,11 +27,10 @@ variable "db_tb_storage" {
 }
 
 ###########################################################################
-# Details related to account/identity (provider.tf)
+# Details related to account/identity (provider.tf) and book keeping
 ###########################################################################
 variable "region"               { default = "eu-frankfurt-1"}
+variable "oci_cli_profile"      { 
+    description = "name of oci cli profile used for session based auth"
+}
 variable "tenancy_ocid"         {}
-variable "compartment_ocid"     {}
-variable "user_ocid"            {}
-variable "fingerprint"          {}
-variable "private_key_path"     {}

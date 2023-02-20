@@ -15,6 +15,10 @@ has been created in my public subnet. This means traffic through the Bastion is 
 I addition I allow Oracle database traffic (1521) from the two addresses of a private endpoint (aka "Reverse connection source IPs")
 into the private subnet. This seems to be a prerequisite for making SQLcl in CloudShell work.   
 
+## Session based authentication 
+
+Provide the name of the session created using `oci cli session autenticate` in the variable `oci_cli_profile`. 
+
 ## Required input parameters 
 
 ```hcl
@@ -37,11 +41,10 @@ The following "default" parameters need to be provided to the oci terraform prov
 
 ```hcl
 variable "region"               { default = "eu-frankfurt-1"}
+variable "oci_cli_profile"      { 
+    description = "name of oci cli profile used for session based auth"
+}
 variable "tenancy_ocid"         {}
-variable "compartment_ocid"     {}
-variable "user_ocid"            {}
-variable "fingerprint"          {}
-variable "private_key_path"     {}
 ```
 
 ## Outputs
