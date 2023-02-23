@@ -2,6 +2,10 @@
 
 https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/CreateAutonomousDatabaseDetails
 
+and 
+
+https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/DatabaseTool
+
 */
 resource "oci_database_autonomous_database" "my_adb" {
 

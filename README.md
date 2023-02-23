@@ -33,11 +33,15 @@ variable "password_ocid" {
 variable "priv_endpoint_ocid" {
     description = "ocid of private endpoint in \"subnet_ocid\" to be used by new connection"
 }
+
+variable "compartment_ocid"     {
+    description = "ocid of compartment"
+}
 ```
 
 ## Default parameters
 
-The following "default" parameters need to be provided to the oci terraform provider. 
+The following "default" parameters need to be passed to the oci terraform provider.
 
 ```hcl
 variable "region"               { default = "eu-frankfurt-1"}
