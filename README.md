@@ -76,3 +76,17 @@ terraform plan --out=oci-adb-intro.tfplan --var-file=config/vars_fra.tfvars
 
 terraform apply "oci-adb-intro.tfplan"
 ```
+
+## TODO: Creating  users for mongodb api verification 
+
+This is the user that matches the connection object that will be created by this terraform specification.
+
+```sql 
+CREATE USER new_user IDENTIFIED BY password
+/
+
+GRANT CREATE SESSION TO new_user
+/
+```
+
+Also, create connection object for this second user. 
