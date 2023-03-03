@@ -15,6 +15,10 @@ has been created in my public subnet. This means traffic through the Bastion is 
 I addition I allow Oracle database traffic (1521) from the two addresses of a private endpoint (aka "Reverse connection source IPs")
 into the private subnet. This seems to be a prerequisite for making SQLcl in CloudShell work.   
 
+## Session based authentication 
+
+Provide the name of the session created using `oci cli session autenticate` in the variable `oci_cli_profile`. 
+
 ## Required input parameters 
 
 ```hcl
@@ -29,19 +33,22 @@ variable "password_ocid" {
 variable "priv_endpoint_ocid" {
     description = "ocid of private endpoint in \"subnet_ocid\" to be used by new connection"
 }
+
+variable "compartment_ocid"     {
+    description = "ocid of compartment"
+}
 ```
 
 ## Default parameters
 
-The following "default" parameters need to be provided to the oci terraform provider. 
+The following "default" parameters need to be passed to the oci terraform provider.
 
 ```hcl
 variable "region"               { default = "eu-frankfurt-1"}
+variable "oci_cli_profile"      { 
+    description = "name of oci cli profile used for session based auth"
+}
 variable "tenancy_ocid"         {}
-variable "compartment_ocid"     {}
-variable "user_ocid"            {}
-variable "fingerprint"          {}
-variable "private_key_path"     {}
 ```
 
 ## Outputs
@@ -69,3 +76,17 @@ terraform plan --out=oci-adb-intro.tfplan --var-file=config/vars_fra.tfvars
 
 terraform apply "oci-adb-intro.tfplan"
 ```
+
+## TODO: Creating  users for mongodb api verification 
+
+This is the user that matches the connection object that will be created by this terraform specification.
+
+```sql 
+CREATE USER new_user IDENTIFIED BY password
+/
+
+GRANT CREATE SESSION TO new_user
+/
+```
+
+Also, create connection object for this second user. 

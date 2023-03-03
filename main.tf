@@ -17,6 +17,7 @@ module "conn" {
     compartment_ocid    = var.compartment_ocid
     connection_name     = "adb-conn"
     adb_db_ocid         = module.db.adb_db_ocid
+    db_user_name        = "admin"
     db_password_ocid    = var.password_ocid
     priv_endpoint_ocid  = var.priv_endpoint_ocid
 }
