@@ -1,0 +1,85 @@
+title: Create Autonomous database
+description: ADB used in multiple samples
+schemaVersion: 1.1.0
+version: "20230321"
+locale: en
+
+variableGroups:
+  - title: "General Configuration"
+    visible: false
+    variables:
+      - tenancy_ocid
+      - compartment_ocid
+      - region
+      - user_ocid
+
+  - title: Network information
+    visible: true
+    variables:
+      - vcn_ocid
+      - subnet_ocid
+
+  - title: Secrets information
+    visible: true
+    variables:
+      - vault_ocid
+      - password_ocid
+      
+variables: 
+  region:
+    type: oci:identity:region:name
+    visible: false
+    required: true
+    title: ${Messages.solutionsHub.genericVariables.region.title()}
+    description: ${Messages.solutionsHub.genericVariables.region.description()}
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    required: true
+    title: Compartment
+    description: Compartment where you want to create resources 
+
+  vcn_ocid:
+    type: oci:core:vcn:id
+    visible: true
+    required: true
+    title: VCN OCID
+    description: OCID of existing VCN to use
+    dependsOn:
+      compartmentId: compartment_ocid
+
+  subnet_ocid:
+    type: oci:core:subnet:id
+    visible: true
+    required: true
+    title: Private Subnet OCID
+    description: OCID of existing Private Subnet to use
+    dependsOn:
+      compartmentId: compartment_ocid
+      vcnId: vcn_ocid
+
+  vault_ocid:
+    type: oci:kms:vault:id
+    visible: true
+    required: true
+    title: Vault OCID
+    descriptioN: OCID of vault containing secrets
+    dependsOn:
+      compartmentId: compartment_ocid
+
+  password_ocid:
+    type: oci:kms:secret:id
+    title: Password OCID
+    required: true
+    description: OCID of password secret
+    dependsOn:
+      compartmentId: compartment_ocid
+      vaultId: vault_ocid
+
+  priv_endpoint_ocid:
+    type: text
+    multiline: false
+    visible: true
+    required: true
+    title: Database tools Private Endpoint
+    description: Database Tools Private Endpoint for Private Access
