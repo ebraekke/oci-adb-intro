@@ -1,3 +1,7 @@
+
+# local provider file 
+local_provider.tf
+
 # Local .terraform directories
 **/.terraform/*
 

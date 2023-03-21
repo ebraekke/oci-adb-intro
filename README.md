@@ -92,6 +92,9 @@ GRANT CREATE SESSION TO new_user
 Also, create connection object for this second user. 
 
 ## Create a release 
+```
+terraform providers lock -platform=linux_amd64
+```
 
 ```
 git archive --format=zip HEAD -o .\config\test_rel.zip
