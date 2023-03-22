@@ -92,6 +92,7 @@ GRANT CREATE SESSION TO new_user
 Also, create connection object for this second user. 
 
 ## Create a release 
+
 ```
 terraform providers lock -platform=linux_amd64
 ```
