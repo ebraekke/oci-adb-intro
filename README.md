@@ -91,12 +91,60 @@ GRANT CREATE SESSION TO new_user
 
 Also, create connection object for this second user. 
 
-## Create a release 
+## Resource Manager
 
-```
+### Create a release 
+
+Perform these operations from the top level folder in repo. 
+
+Remember to add Linux to lock file.
+```bash
 terraform providers lock -platform=linux_amd64
 ```
 
+Create ZIP archive, add non-tracked file from config dir.
+```bash
+git archive --add-file config\provider.tf --format=zip HEAD -o .\config\test_rel.zip
 ```
-git archive --format=zip HEAD -o .\config\test_rel.zip
+
+### Create stack
+
+```bash
+$C = "ocid1.compartment.oc1..SOMESECRETHASHLIKESTRING"
+$config_source = "C:\Users\espenbr\GitHub\oci-adb-intro\config\test_rel.zip"
+$variables_file = "C:/Users/espenbr/GitHub/oci-adb-intro/config/vars_fra.json"
+$disp_name = "Testing123"
+$desc = "ADB Creation from RM" 
+$wait_spec="--wait-for-state=ACTIVE"
+
+oci resource-manager stack create --config-source=$config_source --display-name="$disp_name" --description="$desc" --variables=file://$variables_file -c $C --terraform-version=1.2.x $wait_spec
+```
+
+### Update variables 
+
+```bash
+oci resource-manager stack update --stack-id $stack_ocid --variables=file://C:/Users/espenbr/GitHub/oci-adb-intro/config/vars_fra.json
+```
+
+### Create plan job
+
+```bash
+oci resource-manager job create-plan-job --stack-id $stack_ocid --wait-for-state=SUCCEEDED --wait-interval-seconds=10
+```
+
+
+### Submit apply jib job based on plan run 
+
+`$plan_job_ocid = "ocid1.ormjob.oc1.eu-frankfurt-1.SOMEHASHLIKEVALUE"`
+
+```bash
+oci resource-manager job create-apply-job --execution-plan-strategy FROM_PLAN_JOB_ID --stack-id $stack_ocid --wait-for-state SUCCEEDED --wait-interval-seconds 10 --execution-plan-job-id $plan_job_ocid
+
+```
+
+### Create and run destroy job 
+
+```bash
+oci resource-manager job create-destroy-job --execution-plan-strategy AUTO_APPROVED  --stack-id $stack_ocid --wait-for-state SUCCEEDED --wait-interval-seconds 10
+
 ```
