@@ -1,5 +1,7 @@
 /*
 
+Where is the tools spec? 
+
 https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/CreateAutonomousDatabaseDetails
 
 and 
