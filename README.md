@@ -77,20 +77,6 @@ terraform plan --out=oci-adb-intro.tfplan --var-file=config/vars_fra.tfvars
 terraform apply "oci-adb-intro.tfplan"
 ```
 
-## TODO: Creating  users for mongodb api verification 
-
-This is the user that matches the connection object that will be created by this terraform specification.
-
-```sql 
-CREATE USER new_user IDENTIFIED BY password
-/
-
-GRANT CREATE SESSION TO new_user
-/
-```
-
-Also, create connection object for this second user. 
-
 ## Resource Manager
 
 ### Create a release 
@@ -133,7 +119,7 @@ oci resource-manager job create-plan-job --stack-id $stack_ocid --wait-for-state
 ```
 
 
-### Submit apply jib job based on plan run 
+### Submit apply job job based on plan run 
 
 `$plan_job_ocid = "ocid1.ormjob.oc1.eu-frankfurt-1.SOMEHASHLIKEVALUE"`
 
@@ -148,3 +134,18 @@ oci resource-manager job create-apply-job --execution-plan-strategy FROM_PLAN_JO
 oci resource-manager job create-destroy-job --execution-plan-strategy AUTO_APPROVED  --stack-id $stack_ocid --wait-for-state SUCCEEDED --wait-interval-seconds 10
 
 ```
+
+## TODO: Creating  users for mongodb api verification 
+
+This is the user that matches the connection object that will be created by this terraform specification.
+
+```sql 
+CREATE USER new_user IDENTIFIED BY password
+/
+
+GRANT CREATE SESSION TO new_user
+/
+```
+
+Also, create connection object for this second user. 
+
