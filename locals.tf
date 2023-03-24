@@ -1,16 +1,4 @@
 
-# generate password, this resource creates warnings if you try to output 
-resource "random_password" "_db_password" {
-
-  # https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingpasswordrules.htm
-  length           = 16
-  special          = true
-  override_special = "!#_"
-  min_lower        = 1
-  min_upper        = 1
-  min_numeric      = 1
-  min_special      = 1
-}
 
 # variables for readbility in complex statements
 locals {
@@ -31,6 +19,4 @@ locals {
   faldom_list  = data.oci_identity_fault_domains.ad1_fds.fault_domains
   faldom_count = length(local.faldom_list)
 
-  # get password once
-  db_password_base64 = base64encode(random_password._db_password.result)
 }

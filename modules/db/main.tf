@@ -13,8 +13,8 @@ resource "oci_database_autonomous_database" "my_adb" {
 
     ## name and placement
     compartment_id                      = var.compartment_ocid
-    db_name                             = "myadb"
-    display_name                        = "myadb"
+    db_name                             = var.db_name
+    display_name                        = var.db_name
 
     ## security 
     subnet_id                           = var.subnet_ocid
@@ -30,5 +30,5 @@ resource "oci_database_autonomous_database" "my_adb" {
     # db_version                          = "19c"
     db_workload                         = "OLTP"
     # max_cpu_core_count                  = (var.db_cores * 3)
-    private_endpoint_label              = "myadb"
+    private_endpoint_label              = var.db_name
 }
