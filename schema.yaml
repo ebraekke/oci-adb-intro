@@ -5,19 +5,26 @@ version: "20230321"
 locale: en
 
 variableGroups:
-  - title: "General Configuration"
+  - title: General Configuration
     visible: false
     variables:
       - tenancy_ocid
       - compartment_ocid
       - region
       - user_ocid
+      - oci_cli_profile
+
+  - title: Naming of set
+    visible: true
+    variables:
+      - set_name
 
   - title: Network information
     visible: true
     variables:
       - vcn_ocid
       - subnet_ocid
+      - priv_endpoint_ocid
 
   - title: Secrets information
     visible: true
@@ -25,6 +32,12 @@ variableGroups:
       - vault_ocid
       - password_ocid
       
+  - title: DB size
+    visible: true
+    variables: 
+      - db_cores
+      - db_tb_storage
+
 variables: 
   region:
     type: oci:identity:region:name
@@ -38,6 +51,12 @@ variables:
     required: true
     title: Compartment
     description: Compartment where you want to create resources 
+
+  set_name:
+    visible: true
+    required:  true
+    title: Set
+    description: The name of this set, muts be unique in compartment 
 
   vcn_ocid:
     type: oci:core:vcn:id
@@ -58,6 +77,14 @@ variables:
       compartmentId: compartment_ocid
       vcnId: vcn_ocid
 
+  priv_endpoint_ocid:
+    type: text
+    multiline: false
+    visible: true
+    required: true
+    title: Database tools Private Endpoint
+    description: Database Tools Private Endpoint for Private Access
+
   vault_ocid:
     type: oci:kms:vault:id
     visible: true
@@ -76,10 +103,17 @@ variables:
       compartmentId: compartment_ocid
       vaultId: vault_ocid
 
-  priv_endpoint_ocid:
-    type: text
-    multiline: false
+  db_cores:
+    type: number
     visible: true
     required: true
-    title: Database tools Private Endpoint
-    description: Database Tools Private Endpoint for Private Access
+    title: Cores
+    description: Number of Cores for this ADB
+
+  db_tb_storage:
+    type: number
+    visible: true
+    required: true
+    title: Size
+    description: Size in TB of this ADB
+    
