@@ -3,7 +3,6 @@
 
 This is the first version of a terraform recipe that creates an Autonomous inside a private subnet in a VCN. 
 
-
 The recipe assumes a fairly basic network setup. 
 I use a default VCN created by the wizard. 
 * Netmask for VCN: `10.0.0.0/16`
@@ -14,6 +13,13 @@ In my reference network I only allow traffic on SSH (port 22), Oracle (1521) and
 has been created in my public subnet. This means traffic through the Bastion is the only traffic allowed into the private subnet. 
 I addition I allow Oracle database traffic (1521) from the two addresses of a private endpoint (aka "Reverse connection source IPs")
 into the private subnet. This seems to be a prerequisite for making SQLcl in CloudShell work.   
+
+## Download the latest version of the Resource Manager ready stack from the releases section 
+
+Or you can just click the button below. 
+
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/ebraekke/oci-adb-intro/releases/download/v0.9.0-alpha.1/oci-adb-intro_0.9.0.zip)
+
 
 ## Session based authentication 
 
@@ -168,4 +174,3 @@ GRANT CREATE SESSION TO new_user
 ```
 
 Also, create connection object for this second user. 
-
