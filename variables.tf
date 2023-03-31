@@ -1,5 +1,9 @@
 
 # Variables 
+variable "set_name" {
+    description = "The name of or role of this set, used as base for naming, typicall test/dev/qa"
+}
+
 variable "compartment_ocid"     {
     description = "ocid of compartment"
 }

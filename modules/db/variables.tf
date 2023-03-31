@@ -1,4 +1,5 @@
 
+variable "db_name"              {}
 variable "db_password_base64"   {}
 variable "avadom_name"          {}
 variable "compartment_ocid"     {}
