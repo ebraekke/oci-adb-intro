@@ -8,12 +8,12 @@ variable "compartment_ocid"     {
     description = "ocid of compartment"
 }
 
-variable "subnet_ocid"          {
-    description = "ocid of (private) subnet to host ADB"
-}
-
 variable "vcn_ocid"             {
     description = "ocid of VCN" 
+}
+
+variable "subnet_ocid"          {
+    description = "ocid of (private) subnet to host ADB"
 }
 
 variable "vault_ocid" {
@@ -41,11 +41,10 @@ variable "db_tb_storage" {
 ###########################################################################
 # Details related to account/identity (provider.tf) and book keeping
 ###########################################################################
-# variable "region"               { default = "eu-frankfurt-1"}
-variable "region"               { }
+variable "region"               {}
 
 variable "oci_cli_profile"      { 
-    default = "nosefra"
+    default     = "nosefra" 
     description = "name of oci cli profile used for session based auth"
 }
 variable "tenancy_ocid"         {}
