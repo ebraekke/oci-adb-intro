@@ -4,14 +4,14 @@
 This is the first version of a terraform recipe that creates an Autonomous inside a private subnet in a VCN. 
 
 The recipe assumes a fairly basic network setup. 
-I use a default VCN created by the wizard. 
+I use a default VCN created by the regular console based wizard. 
 * Netmask for VCN: `10.0.0.0/16`
 * Netmask for public subnet: `10.0.0.0/24`
 * Netmask for private subnet: `10.0.1.0/24`
 
-In my reference network I only allow traffic on SSH (port 22), Oracle (1521) and MySQL (3306) from a Bastion's private IP that 
+In my reference network I only allow traffic on SSH (port 22), Oracle (1521 and 27071) and MySQL (3306) from a Bastion's private IP that 
 has been created in my public subnet. This means traffic through the Bastion is the only traffic allowed into the private subnet. 
-I addition I allow Oracle database traffic (1521) from the two addresses of a private endpoint (aka "Reverse connection source IPs")
+I addition I allow Oracle database traffic (1521 and 27071) from the two addresses of a private endpoint (aka "Reverse connection source IPs")
 into the private subnet. This seems to be a prerequisite for making SQLcl in CloudShell work.   
 
 ## Download the latest version of the Resource Manager ready stack from the releases section 
@@ -78,9 +78,9 @@ The created config can be used by the repo `ebraekke/oci-powershell-modules` whe
 Store config files in sub-dir `config/` it is ignored by git.
 
 ```bash
-terraform plan --out=oci-adb-intro.tfplan --var-file=config/vars_fra.tfvars
+terraform plan --out=oci-adb-intro.arn.tfplan --var-file=config/vars_arn.tfvars
 
-terraform apply "oci-adb-intro.tfplan"
+terraform apply "oci-adb-intro.arn.tfplan"
 ```
 
 ## Resource Manager
@@ -104,7 +104,7 @@ git archive --add-file config\provider.tf --format=zip HEAD -o .\config\test_rel
 ```bash
 $C = "ocid1.compartment.oc1..somehashlikestring"
 $config_source = "C:\Users\espenbr\GitHub\oci-adb-intro\config\test_rel.zip"
-$variables_file = "C:/Users/espenbr/GitHub/oci-adb-intro/config/vars_fra.json"
+$variables_file = "C:/Users/espenbr/GitHub/oci-adb-intro/config/vars_arn.json"
 $disp_name = "Demo of ADB stack"
 $desc = "ADB Creation from RM" 
 $wait_spec="--wait-for-state=ACTIVE"
@@ -122,7 +122,7 @@ oci resource-manager  stack list -c $C --output table --query "data [*].{`"ocid`
 +-------------------+------------------------------------------------------------------------------------------------+
 | name              | ocid                                                                                           |
 +-------------------+------------------------------------------------------------------------------------------------+
-| Demo of ADB stack | ocid1.ormstack.oc1.eu-frankfurt-1.somehashlikestring                                           |
+| Demo of ADB stack | ocid1.ormstack.oc1.eu-stockholm-1.somehashlikestring                                           |
 +-------------------+------------------------------------------------------------------------------------------------+
 ```
 
@@ -137,7 +137,7 @@ oci resource-manager job create-plan-job --stack-id $stack_ocid --wait-for-state
 Grab the job id from the output of the plan job.  
 
 ```bash
-$plan_job_ocid = "ocid1.ormjob.oc1.eu-frankfurt-1.somehashlikestring"
+$plan_job_ocid = "ocid1.ormjob.oc1.eu-stockholm-1.somehashlikestring"
 
 oci resource-manager job create-apply-job --execution-plan-strategy FROM_PLAN_JOB_ID --stack-id $stack_ocid --wait-for-state SUCCEEDED --wait-interval-seconds 10 --execution-plan-job-id $plan_job_ocid
 ```
@@ -146,13 +146,12 @@ oci resource-manager job create-apply-job --execution-plan-strategy FROM_PLAN_JO
 
 ```bash
 oci resource-manager job create-destroy-job --execution-plan-strategy AUTO_APPROVED  --stack-id $stack_ocid --wait-for-state SUCCEEDED --wait-interval-seconds 10
-
 ```
 
 ### Update variables 
 
 ```bash
-oci resource-manager stack update --stack-id $stack_ocid --variables=file://C:/Users/espenbr/GitHub/oci-adb-intro/config/vars_fra.json
+oci resource-manager stack update --stack-id $stack_ocid --variables=file://C:/Users/espenbr/GitHub/oci-adb-intro/config/vars_arn.json
 ```
 
 ### Delete a specific stack 

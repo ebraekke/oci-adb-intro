@@ -1,5 +1,10 @@
+
 # Input variables
+set_name            = "<name-of-set>"
+compartment_ocid    = "<ocid-of-compartment>"
+vcn_ocid            = "<ocid-of-vcn>"
 subnet_ocid         = "<ocid-of-theprivate-subnet-for-mysql-here>" 
+vault_ocid          = "<ocid-of-vault-holding-paswword>"
 password_ocid       = "<ocid-of-your-password-secret-here>"
 priv_endpoint_ocid  = "<ocid-of-private-endpoint-to-be-used-by-new-connection>"
 
