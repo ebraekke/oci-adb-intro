@@ -37,7 +37,7 @@ variable "password_ocid" {
 }
 
 variable "priv_endpoint_ocid" {
-    description = "ocid of private endpoint in \"subnet_ocid\" to be used by new connection"
+    description = "ocid of private endpoint in \"vcn_ocid\" to be used by new connection"
 }
 
 variable "compartment_ocid"     {

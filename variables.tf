@@ -25,7 +25,7 @@ variable "password_ocid" {
 }
 
 variable "priv_endpoint_ocid" {
-    description = "ocid of private endpoint in \"subnet_ocid\" to be used by new connection" 
+    description = "ocid of private endpoint in \"vcn_ocid\" to be used by new connection" 
 }
 
 variable "db_cores" {
@@ -39,7 +39,7 @@ variable "db_tb_storage" {
 }
 
 ###########################################################################
-# Details related to account/identity (provider.tf) and book keeping
+# Details related to account/identity (local_provider.tf) and book keeping
 ###########################################################################
 variable "region"               {}
 

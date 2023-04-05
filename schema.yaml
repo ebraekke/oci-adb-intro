@@ -56,7 +56,7 @@ variables:
     visible: true
     required:  true
     title: Set
-    description: The name of this set, must be unique in compartment 
+    description: The name of this set, must be unique in subnet 
 
   vcn_ocid:
     type: oci:core:vcn:id
