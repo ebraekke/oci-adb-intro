@@ -122,7 +122,7 @@ oci resource-manager  stack list -c $C --output table --query "data [*].{`"ocid`
 +-------------------+------------------------------------------------------------------------------------------------+
 | name              | ocid                                                                                           |
 +-------------------+------------------------------------------------------------------------------------------------+
-| Demo of ADB stack | ocid1.ormstack.oc1.eu-stockholm-1.somehashlikestring                                           |
+| Demo of ADB stack | ocid1.ormstack.oc1.eu-frankfurt-1.somehashlikestring                                           |
 +-------------------+------------------------------------------------------------------------------------------------+
 ```
 
@@ -137,7 +137,7 @@ oci resource-manager job create-plan-job --stack-id $stack_ocid --wait-for-state
 Grab the job id from the output of the plan job.  
 
 ```bash
-$plan_job_ocid = "ocid1.ormjob.oc1.eu-stockholm-1.somehashlikestring"
+$plan_job_ocid = "ocid1.ormjob.oc1.eu-frankfurt-1.somehashlikestring"
 
 oci resource-manager job create-apply-job --execution-plan-strategy FROM_PLAN_JOB_ID --stack-id $stack_ocid --wait-for-state SUCCEEDED --wait-interval-seconds 10 --execution-plan-job-id $plan_job_ocid
 ```
@@ -173,3 +173,64 @@ GRANT CREATE SESSION TO new_user
 ```
 
 Also, create connection object for this second user. 
+
+
+# How to query the completed job 
+
+```
+$plan_job_ocid = "ocid1.ormjob.oc1.eu-frankfurt-1.somehashlikestring"
+
+oci resource-manager job-output-summary list-job-outputs --job-id $plan_job_ocid
+{
+  "data": {
+    "items": [
+      {
+        "description": "",
+        "is-sensitive": false,
+        "output-name": "conn_ocid",
+        "output-type": "string",
+        "output-value": "ocid1.databasetoolsconnection.oc1.eu-frankfurt-1.amaaaaaa3gkdkiaacjyckxnf42z7pqb3izxepl2otnne5nf7t6axurz5zpza"
+      }
+    ]
+  }
+}
+
+
+```
+
+```
+$stack_outputs = oci resource-manager job-output-summary list-job-outputs --job-id $plan_job_ocid
+
+$stack_outputs.data.items.Count
+<<
+1
+
+$stack_outputs.data.items[0]
+<<
+description  :
+is-sensitive : False
+output-name  : conn_ocid
+output-type  : string
+output-value : ocid1.databasetoolsconnection.oc1.eu-frankfurt-1.amaaaaaa3gkdkiaacjyckxnf42z7pqb3izxepl2otnne5nf7t6axurz5zpza
+
+
+$stack_outputs.data.items | Where-Object {$_.'output-name' -eq 'conn_ocid'}
+<<
+description  :
+is-sensitive : False
+output-name  : conn_ocid
+output-type  : string
+output-value : ocid1.databasetoolsconnection.oc1.eu-frankfurt-1.amaaaaaa3gkdkiaacjyckxnf42z7pqb3izxepl2otnne5nf7t6axurz5zpza
+
+($stack_outputs.data.items | Where-Object {$_.'output-name'-eq 'conn_ocid'}).'output-value'
+<<
+ocid1.databasetoolsconnection.oc1.eu-frankfurt-1.amaaaaaa3gkdkiaacjyckxnf42z7pqb3izxepl2otnne5nf7t6axurz5zpza
+
+
+$conn_ocid = ($stack_outputs.data.items | Where-Object {$_.'output-name'-eq 'conn_ocid'}).'output-value'
+
+if ($null -eq $conn_ocid) {
+  this is bad!
+}
+
+```
