@@ -11,7 +11,7 @@ config/*
 *.tfstate
 *.tfstate.*
 
-remote_state.tf
+remote_state.tf*
 state.tf
 
 # Crash log files

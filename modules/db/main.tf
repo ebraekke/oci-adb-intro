@@ -21,6 +21,14 @@ resource "oci_database_autonomous_database" "my_adb" {
     admin_password                      = base64decode(var.db_password_base64)
     is_mtls_connection_required         = false
 
+    ## db_tools 
+    db_tools_details {
+        name                     = "MONGODB_API"
+        is_enabled               = true
+        compute_count            = 0
+        max_idle_time_in_minutes = 0 
+    }
+
     ## specs
     cpu_core_count                      = var.db_cores
     data_storage_size_in_tbs            = var.db_tb_storage
