@@ -1,5 +1,6 @@
 # ebraekke/oci-adb-intro
 
+TODO: Needs to be rewritten when publishing companion repos. 
 
 This is the first version of a terraform recipe that creates an Autonomous inside a private subnet in a VCN. 
 
@@ -18,7 +19,7 @@ into the private subnet. This seems to be a prerequisite for making SQLcl in Clo
 
 Or you can just click the button below. 
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/ebraekke/oci-adb-intro/releases/download/v0.9.0-alpha.1/oci-adb-intro_0.9.0.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/ebraekke/oci-adb-intro/releases/download/v0.9.9-alpha.2/oci-adb-intro_0.9.9.zip)
 
 
 ## Session based authentication 
@@ -60,13 +61,15 @@ variable "tenancy_ocid"         {}
 ## Outputs
 
 The created Connection resource contains all the information needed to access ADB.
+The OCID of the datbase is also shared. 
 
 ```bash
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 Outputs:
 
-conn_ocid = "ocid1.databasetoolsconnection.oc1.eu-frankfurt-1.<some-secret-string>"
+adb_db_ocid = "ocid1.autonomousdatabase.oc1.eu-stockholm-1.<some-secret-string>"
+conn_ocid   = "ocid1.databasetoolsconnection.oc1.eu-stockholm-1.<some-secret-string>"
 ```
 
 ## Other 
@@ -173,64 +176,3 @@ GRANT CREATE SESSION TO new_user
 ```
 
 Also, create connection object for this second user. 
-
-
-# How to query the completed job 
-
-```
-$plan_job_ocid = "ocid1.ormjob.oc1.eu-frankfurt-1.somehashlikestring"
-
-oci resource-manager job-output-summary list-job-outputs --job-id $plan_job_ocid
-{
-  "data": {
-    "items": [
-      {
-        "description": "",
-        "is-sensitive": false,
-        "output-name": "conn_ocid",
-        "output-type": "string",
-        "output-value": "ocid1.databasetoolsconnection.oc1.eu-frankfurt-1.amaaaaaa3gkdkiaacjyckxnf42z7pqb3izxepl2otnne5nf7t6axurz5zpza"
-      }
-    ]
-  }
-}
-
-
-```
-
-```
-$stack_outputs = oci resource-manager job-output-summary list-job-outputs --job-id $plan_job_ocid
-
-$stack_outputs.data.items.Count
-<<
-1
-
-$stack_outputs.data.items[0]
-<<
-description  :
-is-sensitive : False
-output-name  : conn_ocid
-output-type  : string
-output-value : ocid1.databasetoolsconnection.oc1.eu-frankfurt-1.amaaaaaa3gkdkiaacjyckxnf42z7pqb3izxepl2otnne5nf7t6axurz5zpza
-
-
-$stack_outputs.data.items | Where-Object {$_.'output-name' -eq 'conn_ocid'}
-<<
-description  :
-is-sensitive : False
-output-name  : conn_ocid
-output-type  : string
-output-value : ocid1.databasetoolsconnection.oc1.eu-frankfurt-1.amaaaaaa3gkdkiaacjyckxnf42z7pqb3izxepl2otnne5nf7t6axurz5zpza
-
-($stack_outputs.data.items | Where-Object {$_.'output-name'-eq 'conn_ocid'}).'output-value'
-<<
-ocid1.databasetoolsconnection.oc1.eu-frankfurt-1.amaaaaaa3gkdkiaacjyckxnf42z7pqb3izxepl2otnne5nf7t6axurz5zpza
-
-
-$conn_ocid = ($stack_outputs.data.items | Where-Object {$_.'output-name'-eq 'conn_ocid'}).'output-value'
-
-if ($null -eq $conn_ocid) {
-  this is bad!
-}
-
-```
