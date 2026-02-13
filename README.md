@@ -81,9 +81,9 @@ The created config can be used by the repo `ebraekke/oci-powershell-modules` whe
 Store config files in sub-dir `config/` it is ignored by git.
 
 ```bash
-terraform plan --out=oci-adb-intro.tfplan --var-file=config/vars_fra.tfvars
+tofu plan --out=oci-adb-intro.tfplan --var-file=config/vars_fra.tfvars
 
-terraform apply "oci-adb-intro.tfplan"
+tofu apply "oci-adb-intro.tfplan"
 ```
 
 ## Resource Manager

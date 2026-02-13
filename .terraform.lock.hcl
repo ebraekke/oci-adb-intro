@@ -1,11 +1,10 @@
-# This file is maintained automatically by "terraform init".
+# This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/hashicorp/oci" {
+provider "registry.opentofu.org/hashicorp/oci" {
   version = "5.22.0"
   hashes = [
-    "h1:/rlf9fDFY6Xorj+Eu/yRrddJSuQnRxvYyL5NQCMOSMc=",
-    "h1:mH+U8uvWwd6emTOYeOC84bIDv/z7xFTDh+N4X5PSgcs=",
+    "h1:IsRxSx+GaxgY8Nv+bone55h4TBVdo670Yz8PVOr/PRE=",
     "zh:02490a2adff7c4ff0cebedeb7889fbf9dcf7aed90b5ddc67a77be5c58d83320c",
     "zh:186a2045555c025c697a006994539c641d7a3007c740881766321d64081f2d63",
     "zh:2f6262a1bad5860288b5395b5a5b5200552118f11f37f4d1a6a43294c8d54114",
